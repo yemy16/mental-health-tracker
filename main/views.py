@@ -12,7 +12,7 @@ from django.urls import reverse
 
 @login_required(login_url='/login')
 def show_main(request):
-    mood_entries = MoodEntry.objects.all()
+    mood_entries = MoodEntry.objects.filter(user=request.user)
 
     context = {
         'name': request.user.username,
@@ -75,7 +75,6 @@ def login_user(request):
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
       
-
    else:
         form = AuthenticationForm(request)
    context = {'form': form}
